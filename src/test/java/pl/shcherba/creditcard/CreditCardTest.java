@@ -1,6 +1,8 @@
 package pl.shcherba.creditcard;
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 import java.math.BigDecimal;
 
@@ -12,7 +14,10 @@ public class CreditCardTest {
         //Act
         card.assignCredit(BigDecimal.valueOf(1000));
         //Assert
-        assert BigDecimal.valueOf(1000).equals(card.getBalance());
+        assertEquals(
+                BigDecimal.valueOf(1000),
+                card.getBalance()
+        );
     }
 
     @Test
@@ -22,16 +27,73 @@ public class CreditCardTest {
         //Act
         card.assignCredit(BigDecimal.valueOf(1500));
         //Assert
-        assert BigDecimal.valueOf(1500).equals(card.getBalance());
+        assertEquals(
+                BigDecimal.valueOf(1500),
+                card.getBalance()
+        );
     }
 
     @Test
-    void itDenyCreditBelowThreshold() {
+    void itDenyCreditBelowThresholdV1() {
         var card = new CreditCard();
         try{
             card.assignCredit(BigDecimal.valueOf(50));
+            fail("Should throw exception");
         } catch (CreditBelowThresholdException e){
-            assert true;
+            assertTrue(true);
         }
     }
+
+    @Test
+    void itDenyCreditBelowThresholdV2() {
+        var card = new CreditCard();
+        //python //
+
+        assertThrows(
+                CreditBelowThresholdException.class,
+                () -> card.assignCredit(BigDecimal.valueOf(10))
+        );
+    }
+
+    @Test
+    void itDenyCreditReassigment() {
+        CreditCard card = new CreditCard();
+        card.assignCredit(BigDecimal.valueOf(1000));
+        assertThrows(
+                CreditAlreadyAssignedException.class,
+                () -> card.assignCredit(BigDecimal.valueOf(1200))
+        );
+    }
+
+    @Test
+    void itAllowsToPaySomething() {
+        CreditCard card = new CreditCard();
+        card.assignCredit(BigDecimal.valueOf(1000));
+
+        card.pay(BigDecimal.valueOf(900));
+
+        assertEquals(
+                BigDecimal.valueOf(100),
+                card.getBalance()
+        );
+    }
+
+    @Test
+    void itDenyWhenNotSufficentFounds() {
+        CreditCard card = new CreditCard();
+        card.assignCredit(BigDecimal.valueOf(1000));
+
+        card.pay(BigDecimal.valueOf(900));
+
+        assertThrows(
+                NotEnoughMoneyException.class,
+                () -> card.pay(BigDecimal.valueOf(200))
+        );
+
+    }
+
+
+
+
+
 }
