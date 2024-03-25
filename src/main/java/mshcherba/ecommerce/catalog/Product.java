@@ -1,10 +1,9 @@
-package pl.shcherba.ecommerce.catalog;
+package ecommerce;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 public class Product {
-
 
     private final String id;
     private final String name;
@@ -27,5 +26,13 @@ public class Product {
 
     public void changePrice(BigDecimal newPrice) {
         this.price = newPrice;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

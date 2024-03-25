@@ -1,6 +1,5 @@
-package pl.shcherba.ecommerce;
+package ecommerce;
 
-import pl.shcherba.ecommerce.catalog.ProductCatalog;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -10,15 +9,16 @@ import org.springframework.context.annotation.Bean;
 
 public class App {
     public static void main(String[] args){
+        System.out.println("Hello world");
         SpringApplication.run(App.class, args);
     }
 
     @Bean
     ProductCatalog createMyProductCatalog() {
-        var catalog = new ProductCatalog();
-        catalog.addProduct("lego set 8083", "Nice One");
-        catalog.addProduct("Cobi blocks", "Nice One");
+        ProductCatalog productCatalog=new ProductCatalog();
+        productCatalog.addProduct("Lego set 7087","Nice one");
+        productCatalog.addProduct("Lego 23","Nice one");
 
-        return catalog;
+        return productCatalog;
     }
 }

@@ -1,5 +1,9 @@
 package pl.shcherba.creditcard;
 
+import mshcherba.creditcard.CreditAlreadyAssignedException;
+import mshcherba.creditcard.CreditBelowThresholdException;
+import mshcherba.creditcard.CreditCard;
+import mshcherba.creditcard.NotEnoughMoneyException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

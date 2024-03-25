@@ -1,58 +1,61 @@
-package ecommerce.catalog;
+package shcherba.ecommerce.catalog;
 
-
+import mshcherba.ecommerce.catalog.Product;
+import mshcherba.ecommerce.catalog.ProductCatalog;
 import org.junit.jupiter.api.Test;
-import pl.shcherba.ecommerce.catalog.Product;
-import pl.shcherba.ecommerce.catalog.ProductCatalog;
-
 import static org.assertj.core.api.Assertions.*;
-
 import java.math.BigDecimal;
 import java.util.List;
-
 public class ProductCatalogTest {
 
     @Test
     void itListAvailableProducts() {
+
         ProductCatalog catalog = new ProductCatalog();
 
         List<Product> products = catalog.allProducts();
 
         assert products.isEmpty();
-    }
 
+    }
     @Test
-    void itListAllowsToAddProduct() {
+    void itAllowsToAddProduct() {
+
         ProductCatalog catalog = new ProductCatalog();
 
         catalog.addProduct("Lego set 8083", "Nice one");
         List<Product> products = catalog.allProducts();
 
-        Assertions.assertThat(products)
+        assertThat(products)
                 .hasSize(1);
-
     }
 
+
     @Test
-    void  itLoadsSingleProductById() {
+    void itLoadsSingleProductsId() {
+
         ProductCatalog catalog = new ProductCatalog();
-        String id = catalog.addProduct("Lego set 8083", "Nice one");
+        String id = catalog.addProduct("Lego set 80808", "Nice one");
+
 
         Product loaded = catalog.getProductBy(id);
 
-        Assertions.assertThat(id).isEqualTo(loaded.getId());
+        assertThat(id).isEqualTo(loaded.getId());
+
     }
 
     @Test
-    void itAllowsChangePrice() {
+    void itAllowsToChangePrice() {
+
         ProductCatalog catalog = new ProductCatalog();
-        String id = catalog.addProduct("Lego set 8083", "Nice one");
+        String id = catalog.addProduct("Lego set 80808", "Nice one");
 
 
         catalog.changePrice(id, BigDecimal.valueOf(10.10));
         Product loaded = catalog.getProductBy(id);
 
-        Assertions.assertThat(BigDecimal.valueOf(10.10)).isEqualTo(loaded.getPrice());
-    }
+        assertThat(BigDecimal.valueOf(10.10)).isEqualTo(loaded.getPrice());
 
+
+    }
 }
