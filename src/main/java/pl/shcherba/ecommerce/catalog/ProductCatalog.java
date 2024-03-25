@@ -1,4 +1,4 @@
-package ecommerce.catalog;
+package pl.shcherba.ecommerce.catalog;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

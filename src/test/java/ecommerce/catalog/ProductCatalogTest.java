@@ -2,6 +2,8 @@ package ecommerce.catalog;
 
 
 import org.junit.jupiter.api.Test;
+import pl.shcherba.ecommerce.catalog.Product;
+import pl.shcherba.ecommerce.catalog.ProductCatalog;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -26,7 +28,7 @@ public class ProductCatalogTest {
         catalog.addProduct("Lego set 8083", "Nice one");
         List<Product> products = catalog.allProducts();
 
-        assertThat(products)
+        Assertions.assertThat(products)
                 .hasSize(1);
 
     }
@@ -38,7 +40,7 @@ public class ProductCatalogTest {
 
         Product loaded = catalog.getProductBy(id);
 
-        assertThat(id).isEqualTo(loaded.getId());
+        Assertions.assertThat(id).isEqualTo(loaded.getId());
     }
 
     @Test
@@ -50,7 +52,7 @@ public class ProductCatalogTest {
         catalog.changePrice(id, BigDecimal.valueOf(10.10));
         Product loaded = catalog.getProductBy(id);
 
-        assertThat(BigDecimal.valueOf(10.10)).isEqualTo(loaded.getPrice());
+        Assertions.assertThat(BigDecimal.valueOf(10.10)).isEqualTo(loaded.getPrice());
     }
 
 }

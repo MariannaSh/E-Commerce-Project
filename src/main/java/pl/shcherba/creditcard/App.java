@@ -1,4 +1,4 @@
-package pl.shcherba;
+package pl.shcherba.creditcard;
 
 import java.util.Collections;
 
