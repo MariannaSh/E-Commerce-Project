@@ -1,4 +1,4 @@
-package pl.shcherba.creditcard;
+package shcherba.creditcard;
 
 
 import org.junit.jupiter.api.Test;

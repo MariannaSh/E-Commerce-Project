@@ -1,4 +1,4 @@
-package ecommerce.hello;
+package mshcherba.ecommerce.hello;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

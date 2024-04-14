@@ -1,4 +1,4 @@
-package ecommerce;
+package mshcherba.ecommerce.catalog;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -20,8 +20,8 @@ public class Product {
         return id;
     }
 
-    public String getPrice() {
-        return price.toString();
+    public BigDecimal getPrice() {
+        return price;
     }
 
     public void changePrice(BigDecimal newPrice) {

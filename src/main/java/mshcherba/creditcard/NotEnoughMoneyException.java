@@ -1,3 +1,3 @@
-package pl.shcherba.creditcard;
+package mshcherba.creditcard;
 
 public class NotEnoughMoneyException extends IllegalStateException { }

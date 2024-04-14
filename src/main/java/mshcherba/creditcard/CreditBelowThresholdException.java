@@ -1,4 +1,4 @@
-package pl.shcherba.creditcard;
+package mshcherba.creditcard;
 
 public class CreditBelowThresholdException extends IllegalStateException{
 

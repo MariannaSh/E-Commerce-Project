@@ -1,18 +1,16 @@
-package pl.shcherba.creditcard;
+package mshcherba.creditcard;
 
 import java.math.BigDecimal;
 
 public class CreditCard {
     private BigDecimal creditLimit;
-    private  BigDecimal balance;
+    private BigDecimal balance;
 
-    public void assignCredit(BigDecimal creditLimit) {
-
-        if (isCreditAlreadyAssigned() ){
+    public void assignCreditLimit(BigDecimal creditLimit){
+        if (this.creditLimit != null){
             throw new CreditAlreadyAssignedException();
         }
-        //100 < x
-        if (isCreditBelowThreshold(creditLimit)){
+        if (isCreditBelowThreshold(creditLimit)) {
             throw new CreditBelowThresholdException();
         }
 
@@ -20,30 +18,26 @@ public class CreditCard {
         this.balance = creditLimit;
     }
 
-    private static boolean isCreditBelowThreshold(BigDecimal creditLimit) {
-        return BigDecimal.valueOf(100).compareTo(creditLimit) > 0;
-    }
-
-
-
     private boolean isCreditAlreadyAssigned() {
         return this.creditLimit != null;
     }
 
-    public BigDecimal getBalance() {
+    private boolean isCreditBelowThreshold(BigDecimal creditLimit){
+        return BigDecimal.valueOf(100).compareTo(creditLimit) > 0;
+    }
+
+    public BigDecimal getBalance(){
         return balance;
     }
 
     public void pay(BigDecimal money) {
-        if (!canAfford(money)){
+        if (!canAfford(money)) {
             throw new NotEnoughMoneyException();
         }
-        this.balance =this.balance.subtract(money);
+        this.balance = this.balance.subtract(money);
     }
 
-
-    private boolean canAfford(BigDecimal money) {
-        return this.balance.subtract(money).compareTo(BigDecimal.ZERO)>0;
+    private boolean canAfford(BigDecimal money){
+        return this.balance.subtract(money).compareTo(BigDecimal.ZERO) > 0;
     }
-
 }

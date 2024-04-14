@@ -1,11 +1,12 @@
-package ecommerce;
+package mshcherba;
 
+import mshcherba.ecommerce.catalog.HasMapProductStorage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import mshcherba.ecommerce.catalog.ProductCatalog;
 
 @SpringBootApplication
-
 
 public class App {
     public static void main(String[] args){
@@ -15,10 +16,10 @@ public class App {
 
     @Bean
     ProductCatalog createMyProductCatalog() {
-        ProductCatalog productCatalog=new ProductCatalog();
-        productCatalog.addProduct("Lego set 7087","Nice one");
-        productCatalog.addProduct("Lego 23","Nice one");
+        var catalog = new ProductCatalog(new HasMapProductStorage());
+        catalog.addProduct("Lego set 8083", "Nice done");
+        catalog.addProduct("Cobi blocks", "Nice one");
 
-        return productCatalog;
+        return catalog;
     }
 }
