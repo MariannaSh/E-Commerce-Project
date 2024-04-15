@@ -1,8 +1,5 @@
-package shcherba.ecommerce.catalog;
+package mshcherba.ecommerce.catalog;
 
-import mshcherba.ecommerce.catalog.HasMapProductStorage;
-import mshcherba.ecommerce.catalog.Product;
-import mshcherba.ecommerce.catalog.ProductStorage;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

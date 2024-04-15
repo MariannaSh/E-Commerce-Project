@@ -1,8 +1,5 @@
-package shcherba.ecommerce.catalog;
+package mshcherba.ecommerce.catalog;
 
-import mshcherba.ecommerce.catalog.ArrayListProductStorage;
-import mshcherba.ecommerce.catalog.Product;
-import mshcherba.ecommerce.catalog.ProductCatalog;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 import java.math.BigDecimal;
