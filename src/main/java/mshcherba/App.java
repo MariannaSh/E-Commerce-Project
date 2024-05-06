@@ -1,6 +1,7 @@
 package mshcherba;
 
 import mshcherba.ecommerce.catalog.HasMapProductStorage;
+import mshcherba.ecommerce.sales.SalesFacade;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -21,5 +22,10 @@ public class App {
         catalog.addProduct("Cobi blocks", "Nice one");
 
         return catalog;
+    }
+
+    @Bean
+    SalesFacade createSales() {
+        return new SalesFacade();
     }
 }
