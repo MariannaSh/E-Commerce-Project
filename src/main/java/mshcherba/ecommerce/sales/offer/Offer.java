@@ -1,4 +1,4 @@
-package mshcherba.ecommerce.sales;
+package mshcherba.ecommerce.sales.offer;
 
 import java.math.BigDecimal;
 

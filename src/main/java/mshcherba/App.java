@@ -1,7 +1,9 @@
 package mshcherba;
 
 import mshcherba.ecommerce.catalog.HasMapProductStorage;
+import mshcherba.ecommerce.sales.offer.OfferCalculator;
 import mshcherba.ecommerce.sales.SalesFacade;
+import mshcherba.ecommerce.sales.cart.InMemoryCartStorage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +28,6 @@ public class App {
 
     @Bean
     SalesFacade createSales() {
-        return new SalesFacade();
+        return new SalesFacade(new InMemoryCartStorage(), new OfferCalculator());
     }
 }

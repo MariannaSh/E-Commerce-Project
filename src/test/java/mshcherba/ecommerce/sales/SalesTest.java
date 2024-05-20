@@ -1,6 +1,9 @@
 package mshcherba.ecommerce.sales;
 
 
+import mshcherba.ecommerce.sales.cart.InMemoryCartStorage;
+import mshcherba.ecommerce.sales.offer.Offer;
+import mshcherba.ecommerce.sales.offer.OfferCalculator;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -12,7 +15,7 @@ public class SalesTest {
     @Test
     void itShowOffer(){
         SalesFacade sales = thereIsSalesFacade();
-        String customerId= thereIsExampleCustomer("mari");
+        String customerId= thereIsExampleCustomer("Mari");
 
         Offer offer = sales.getCurrentOffer(customerId);
 
@@ -21,7 +24,7 @@ public class SalesTest {
     }
 
     private SalesFacade thereIsSalesFacade() {
-        return new SalesFacade();
+        return new SalesFacade(new InMemoryCartStorage(), new OfferCalculator());
     }
 
     private String thereIsExampleCustomer(String id) {
@@ -80,6 +83,8 @@ public class SalesTest {
     private String thereIsProduct(String name, BigDecimal price) {
         return name;
     }
+
+
 
 
 }
