@@ -29,7 +29,7 @@ public class SalesTest {
     }
 
     @Test
-    void itAllowsProductToCart(){
+    void itAllowsAddProductToCart(){
         String productId = thereIsProduct("Example", BigDecimal.valueOf(10));
         String customerId = thereIsExampleCustomer("Mari");
         SalesFacade sales = thereIsSalesFacade();
@@ -37,13 +37,10 @@ public class SalesTest {
         sales.addToCart(customerId, productId);
         Offer offer = sales.getCurrentOffer(customerId);
 
-        assertEquals(2,offer.getItemsCount());
-        assertEquals(BigDecimal.valueOf(30), offer.getTotal());
+        assertEquals(1,offer.getItemsCount());
+        assertEquals(BigDecimal.valueOf(10), offer.getTotal());
     }
 
-    private String thereIsProduct(String example, BigDecimal bigDecimal) {
-
-    }
 
     @Test
     void itDistinguishCartsByCustomer(){
@@ -66,18 +63,23 @@ public class SalesTest {
     }
 
     @Test
-    void itAllowsOffer(){
-        String productId = thereIsProduct("Example", BigDecimal.valueOf(10));
+    void itAllowsToAddMultipleProductsToCart(){
+        String productA = thereIsProduct("Example a", BigDecimal.valueOf(10));
+        String productB = thereIsProduct("Example b", BigDecimal.valueOf(20));
         String customerId = thereIsExampleCustomer("Mari");
         SalesFacade sales = thereIsSalesFacade();
 
-        sales.addToCart(customerId, productId);
+        sales.addToCart(customerId, productA);
+        sales.addToCart(customerId, productB);
         Offer offer = sales.getCurrentOffer(customerId);
 
-        assertEquals(2,offer.getItemsCount());
-        assertEquals(BigDecimal.valueOf(30), offer.getTotal());
+        assertEquals(2, offer.getItemsCount());
+        assertEquals(BigDecimal.valueOf(10), offer.getTotal());
     }
 
+    private String thereIsProduct(String name, BigDecimal price) {
+        return name;
+    }
 
 
 }

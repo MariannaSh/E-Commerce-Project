@@ -10,11 +10,13 @@ getCurrentOffer = () => {
 
 const createProductHtml = (productData) => {
     const template = `
-        <div>
+        <div class="product">
             <h4>${productData.name}</h4>
-            <span>${productData.price}</span>
             <img src = "https://cdn.britannica.com/70/234870-050-D4D024BB/Orange-colored-cat-yawns-displaying-teeth.jpg"/>
-            <button data-id="${productData.id}">Add to cart</button>
+            <div class="product_price">
+                <span>${productData.price}</span>
+                <button data-id="${productData.id}">Add to cart +</button>
+            </div>
         </div>
     `
     const productEl = document.createElement("li");

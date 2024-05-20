@@ -22,7 +22,7 @@ public class SqlTest {
     JdbcTemplate jdbcTemplate;
 
     @BeforeEach
-    void setupDd(){
+    void setupDatabase(){
         jdbcTemplate.execute("DROP TABLE `product_catalog__products` IF EXISTS;");
         var createTableSql= """
                 CREATE TABLE `product_catalog__products` (

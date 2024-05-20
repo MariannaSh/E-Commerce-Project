@@ -11,7 +11,7 @@ public class SalesController {
     SalesFacade sales;
 
     public SalesController(SalesFacade sales){
-        this.sales=sales;
+        this.sales = sales;
     }
 
     @GetMapping("/api/current-offer")
