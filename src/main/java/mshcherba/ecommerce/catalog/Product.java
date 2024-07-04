@@ -8,16 +8,27 @@ public class Product {
     private  String name;
     private  String description;
 
+    private String imageUrl;
     private BigDecimal price;
 
     Product() {
     }
 
-    public Product(UUID id, String name, String description, BigDecimal price) {
+    public Product(UUID id, String name, String description, BigDecimal price,  String imageUrl) {
         this.id = id.toString();
         this.name = name;
         this.description = description;
         this.price = price;
+        this.imageUrl = imageUrl;
+    }
+
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getId() {

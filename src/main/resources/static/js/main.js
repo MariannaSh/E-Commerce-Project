@@ -35,7 +35,7 @@ const createProductHtmlEl = (productData) => {
     const template = `
         <div>
             <h4>${productData.name}</h4>
-            <img src="https://cdn.britannica.com/70/234870-050-D4D024BB/Orange-colored-cat-yawns-displaying-teeth.jpg" width="300" height="200" alt="zdjęcie produktu" />
+            <img src="${productData.imageUrl}" width="300" height="200" alt="zdjęcie produktu" />
             <br><br>
             <span>${productData.price}</span><br>
             <button data-id="${productData.id}">Add to cart</button>
@@ -51,13 +51,14 @@ const createProductHtmlEl = (productData) => {
             margin-top: 20px;
             cursor: pointer;
             color: white;
-</style>
-        `;
+        </style>
+    `;
 
     const htmlEl = document.createElement("li");
     htmlEl.innerHTML = template.trim();
     return htmlEl;
 }
+
 const refreshCurrentOffer = () => {
     const totalEl = document.querySelector('#offerTotal');
     const itemCountEl = document.querySelector('#offerItemsCount');

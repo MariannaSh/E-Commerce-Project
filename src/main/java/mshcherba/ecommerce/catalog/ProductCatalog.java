@@ -1,7 +1,6 @@
 package mshcherba.ecommerce.catalog;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,9 +19,9 @@ public class ProductCatalog {
         return productStorage.allProducts();
     }
 
-    public String addProduct(String name, String description, BigDecimal price) {
+    public String addProduct(String name, String description, BigDecimal price, String url) {
         UUID id = UUID.randomUUID();
-        Product newProduct = new Product(id,name,description,price);
+        Product newProduct = new Product(id,name,description,price, url);
 
         productStorage.add(newProduct);
         return newProduct.getId();

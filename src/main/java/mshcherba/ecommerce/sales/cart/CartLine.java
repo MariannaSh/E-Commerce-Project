@@ -18,4 +18,5 @@ public class CartLine {
     public Integer getQty() {
         return qty;
     }
+
 }

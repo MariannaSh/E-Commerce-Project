@@ -19,4 +19,9 @@ public class ProductCatalogController {
     List<Product> getMyProduct() {
         return catalog.allProducts();
     }
+
+    @GetMapping("/api/published-products")
+    List<Product> getPublishedProducts(){
+        return new ArrayList<>();
+    }
 }

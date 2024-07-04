@@ -26,7 +26,7 @@ public class HttpProductCatalogTest {
     @Test
     void itLoadsEcommerceHomepage() {
         var url = String.format("http://localhost:%s/api/products", port);
-        catalog.addProduct("My example Product", "ex description", BigDecimal.valueOf(300));
+        catalog.addProduct("My example Product", "ex description", BigDecimal.valueOf(300), "https://example.com/images/lego8083.jpg");
 
         ResponseEntity<Product[]> response = http.getForEntity(url, Product[].class);
 

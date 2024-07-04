@@ -62,7 +62,8 @@ public class SqlProductStorage implements ProductStorage {
                 UUID.randomUUID(),
                 rs.getString("NAME"),
                 rs.getString("DESCRIPTION"),
-                rs.getBigDecimal("PRICE")
+                rs.getBigDecimal("PRICE"),
+                rs.getString("IMAGE_URL")
         );
     }
 
