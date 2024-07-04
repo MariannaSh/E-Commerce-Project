@@ -41,9 +41,9 @@ public class SalesHTTPTest {
 
         var acceptOfferRequest = new AcceptOfferRequest();
         acceptOfferRequest
-                .setFname("Zuza")
-                .setLname("Zimmer")
-                .setEmail("zuza@gmail.pl");
+                .setFname("Mari")
+                .setLname("Shcherba")
+                .setEmail("mari@gmail.com");
 
         ResponseEntity<ReservationDetails> acceptOfferResponse = http.postForEntity(
                 acceptOfferUrl,acceptOfferRequest,ReservationDetails.class

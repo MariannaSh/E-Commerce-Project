@@ -51,7 +51,7 @@ public class SalesTest {
     @Test
     void itAddsProductToCart() {
         SalesFacade sales = thereIsSales();
-        String customerId = thereIsCustomer("Zuza");
+        String customerId = thereIsCustomer("Mari");
         String productId = thereIsProduct("x",BigDecimal.valueOf(300));
 
         sales.addToCart(customerId,productId);

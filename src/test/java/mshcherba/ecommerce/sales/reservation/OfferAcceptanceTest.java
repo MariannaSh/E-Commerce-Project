@@ -39,7 +39,7 @@ public class OfferAcceptanceTest {
         acceptOfferRequest
                 .setFname("Mari")
                 .setLname("Shcherba")
-                .setEmail("mari@gmail.pl");
+                .setEmail("mari@gmail.com");
 
         ReservationDetails reservationDetails = sales.acceptOffer(customerId, acceptOfferRequest);
 
@@ -49,7 +49,7 @@ public class OfferAcceptanceTest {
         assertPaymentHasBeenRegistered();
         asserThereIsReservationWithId(reservationDetails.getReservationId());
         asserReservationIsPending(reservationDetails.getReservationId());
-        asserReservationIsDoneForCustomer(reservationDetails.getReservationId(), "Mari", "Shcherba", "mari@gmail.pl");
+        asserReservationIsDoneForCustomer(reservationDetails.getReservationId(), "Mari", "Shcherba", "mari@gmail.com");
         asserReservationTotalMatchOffer(reservationDetails.getReservationId(), BigDecimal.valueOf(300));
 
     }
