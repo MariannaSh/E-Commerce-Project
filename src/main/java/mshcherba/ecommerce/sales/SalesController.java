@@ -22,9 +22,10 @@ public class SalesController {
     }
 
     @PostMapping("/api/accept-offer")
-    ReservationDetails acceptOffer(@RequestBody AcceptOfferRequest request) {
+    ReservationDetails acceptOffer(@RequestBody AcceptOfferRequest acceptOfferRequest){
         String customerId = getCurrentCustomer();
-        return sales.acceptOffer(customerId, request);
+        ReservationDetails details = sales.acceptOffer(customerId, acceptOfferRequest);
+        return details;
     }
 
     @GetMapping("/api/current-offer")

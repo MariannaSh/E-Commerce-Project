@@ -1,55 +1,90 @@
 package mshcherba.ecommerce.payu;
 
+import mshcherba.ecommerce.sales.payment.PaymentDetails;
+import mshcherba.ecommerce.sales.payment.PaymentGateway;
+import mshcherba.ecommerce.sales.payment.RegisterPaymentRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import javax.print.attribute.standard.Media;
+import java.util.Arrays;
+import java.util.UUID;
 
-public class PayU {
+
+public class PayU implements PaymentGateway {
+
     RestTemplate http;
-    PayUCredentials credentials;
+    private final PayUCredentials payUCredentials;
 
-    public PayU(RestTemplate http,PayUCredentials credentials ) {
+    public PayU(RestTemplate http, PayUCredentials payUCredentials) {
         this.http = http;
-        this.credentials = credentials;
+        this.payUCredentials = payUCredentials;
     }
 
-    public OrderCreateResponse handle(OrderCreateRequest request) {
-        var url = getUrl("/api/v2_1/orders");
-
+    public OrderCreateResponse handle(OrderCreateRequest orderCreateRequest) {
+        //Authorize
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         headers.add("Authorization", String.format("Bearer %s", getToken()));
 
-        HttpEntity<OrderCreateRequest> headerAwareRequest = new HttpEntity<>(request, headers);
+        HttpEntity<OrderCreateRequest> request = new HttpEntity<>(orderCreateRequest, headers);
 
-        ResponseEntity<OrderCreateResponse> response = http.postForEntity(url, headerAwareRequest, OrderCreateResponse.class);
-
-        return response.getBody();
+        ResponseEntity<OrderCreateResponse> orderCreateResponse = http.postForEntity(
+                String.format("%s/api/v2_1/orders", payUCredentials.getBaseUrl()),
+                request,
+                OrderCreateResponse.class
+        );
+        //Create order
+        return orderCreateResponse.getBody();
     }
 
     private String getToken() {
         String body = String.format(
                 "grant_type=client_credentials&client_id=%s&client_secret=%s",
-                credentials.getClientId(),
-                credentials.getClientSecret()
+                payUCredentials.getClientId(),
+                payUCredentials.getClientSecret()
         );
-        var url = getUrl("/pl/standard/user/oauth/authorize");
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
         HttpEntity<String> request = new HttpEntity<>(body, headers);
-        ResponseEntity<AccessTokenResponse> response = http.postForEntity(url, request, AccessTokenResponse.class);
+        ResponseEntity<AccessTokenResponse> atResponse = http.postForEntity(
+                String.format("%s/pl/standard/user/oauth/authorize", payUCredentials.getBaseUrl()),
+                request,
+                AccessTokenResponse.class
+        );
 
-
-        return response.getBody().getAccessToken();
-
+        return atResponse.getBody().getAccessToken();
     }
-    private String getUrl(String path) {
-        return String.format("%s%s", credentials.getBaseUrl(), path);
+
+
+    @Override
+    public PaymentDetails registerPayment(RegisterPaymentRequest registerPaymentRequest) {
+        var request = new OrderCreateRequest();
+        request
+                .setNotifyUrl("https://my.example.shop.wbub.pl/api/order")
+                .setCustomerIp("127.0.0.1")
+                .setMerchantPosId("300746")
+                .setDescription("My ebook")
+                .setCurrencyCode("PLN")
+                .setTotalAmount(registerPaymentRequest.getTotalAsPennies())
+                .setExtOrderId(UUID.randomUUID().toString())
+                .setBuyer((new Buyer())
+                        .setEmail(registerPaymentRequest.getEmail())
+                        .setFirstName(registerPaymentRequest.getFirstname())
+                        .setLastName(registerPaymentRequest.getLastname())
+                        .setLanguage("pl")
+                )
+                .setProducts(Arrays.asList(
+                        new Product()
+                                .setName("Product X")
+                                .setQuantity(1)
+                                .setUnitPrice(210000)
+                ));
+
+        OrderCreateResponse response = this.handle(request);
+        return new PaymentDetails(response.getRedirectUri(), response.getOrderId());
     }
+
 }

@@ -41,11 +41,9 @@ public class SalesFacade {
     }
 
     public Offer getCurrentOffer(String customerId) {
-        Cart cart = cartStorage.findByCustomerId(customerId).orElse(Cart.empty());
-
-        Offer offer = offerCalculator.calculate(cart.getItems());
-
-        return offer;
+        Cart cart = cartStorage.findByCustomerId(customerId)
+                .orElse(Cart.empty());
+        return offerCalculator.calculate(cart.getItems());
     }
 
     public ReservationDetails acceptOffer(String customerId, AcceptOfferRequest acceptOfferRequest){

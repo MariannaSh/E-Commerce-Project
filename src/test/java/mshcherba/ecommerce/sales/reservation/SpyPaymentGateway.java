@@ -3,11 +3,10 @@ package mshcherba.ecommerce.sales.reservation;
 import mshcherba.ecommerce.sales.payment.RegisterPaymentRequest;
 import mshcherba.ecommerce.sales.payment.PaymentDetails;
 import mshcherba.ecommerce.sales.payment.PaymentGateway;
+import java.util.UUID;
 
 public class SpyPaymentGateway implements PaymentGateway {
     Integer requestCount = 0;
-    public RegisterPaymentRequest lastRequest;
-
     public Integer getRequestsCount() {
         return requestCount;
     }
@@ -15,7 +14,6 @@ public class SpyPaymentGateway implements PaymentGateway {
     @Override
     public PaymentDetails registerPayment(RegisterPaymentRequest registerPaymentRequest) {
         this.requestCount++;
-        lastRequest = registerPaymentRequest;
-        return new PaymentDetails("http://spy-gateway");
+        return new PaymentDetails("http://spy-gateway", UUID.randomUUID().toString());
     }
 }

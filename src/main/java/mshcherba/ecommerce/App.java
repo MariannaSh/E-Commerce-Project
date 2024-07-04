@@ -1,15 +1,19 @@
 package mshcherba.ecommerce;
 
 import mshcherba.ecommerce.catalog.ArrayListProductStorage;
-import mshcherba.ecommerce.infrastructure.PayUPaymentGw;
+import mshcherba.ecommerce.payu.PayU;
+import mshcherba.ecommerce.payu.PayUCredentials;
+import mshcherba.ecommerce.playground.SqlProductStorage;
 import mshcherba.ecommerce.sales.SalesFacade;
 import mshcherba.ecommerce.sales.cart.InMemoryCartStorage;
 import mshcherba.ecommerce.sales.offer.OfferCalculator;
+import mshcherba.ecommerce.sales.payment.PaymentGateway;
 import mshcherba.ecommerce.sales.reservation.ReservationRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import mshcherba.ecommerce.catalog.ProductCatalog;
+import org.springframework.web.client.RestTemplate;
 
 
 import java.math.BigDecimal;
@@ -22,11 +26,28 @@ public class App {
     }
 
     @Bean
+    public SqlProductStorage sqlProductStorage() {
+        return new SqlProductStorage();
+    }
+
+    @Bean
+    PaymentGateway createPaymentGateway(){
+        return new PayU(
+                new RestTemplate(),
+                PayUCredentials.sandbox(
+                        "300746",
+                        "2ee86a66e5d97e3fadc400c9f19b065d"
+                )
+        );
+
+    }
+
+    @Bean
     SalesFacade createSalesFacade() {
         return new SalesFacade(
                 new InMemoryCartStorage(),
                 new OfferCalculator(),
-                new PayUPaymentGw(),
+                createPaymentGateway(),
                 new ReservationRepository()
         );
     }

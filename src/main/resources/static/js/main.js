@@ -14,10 +14,10 @@ const addProductToCart = (productId) => {
     });
 }
 const acceptOffer = (acceptOfferRequest) => {
-    return fetch(`/api/accept-offer`, {
-        method: 'POST',
+    return fetch("/api/accept-offer", {
+        method: "POST",
         headers: {
-            "Content-Type":"application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(acceptOfferRequest)
     }).then(response => response.json());
@@ -38,7 +38,7 @@ const createProductHtmlEl = (productData) => {
             <img src="https://cdn.britannica.com/70/234870-050-D4D024BB/Orange-colored-cat-yawns-displaying-teeth.jpg" width="300" height="200" alt="zdjęcie produktu" />
             <br><br>
             <span>${productData.price}</span><br>
-            <button data-id="${productData.id}">Add to cart</button>       
+            <button data-id="${productData.id}">Add to cart</button>
         </div>
         <style>
         button {background-color: #5e5949;
@@ -90,7 +90,7 @@ checkoutFormEl.addEventListener("submit", (event) => {
     }
 
     acceptOffer(acceptOfferRequest)
-        .then(reservationDetails => window.location.href = reservationDetails.paymentUrl)
+        .then(reservationDetails => window.location.href = reservationDetails.paymentUrl);
 });
 
 //product as json -> product as html -> add to html list
@@ -107,3 +107,4 @@ document.addEventListener("DOMContentLoaded", () => {
     getCurrentOffer()
         .then(offer => refreshOffer(offer));
 });
+

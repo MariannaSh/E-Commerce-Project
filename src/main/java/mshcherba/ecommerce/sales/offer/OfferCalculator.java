@@ -13,22 +13,20 @@ public class OfferCalculator {
         BigDecimal basePrice = BigDecimal.valueOf(300);
         BigDecimal totalPrice = basePrice.multiply(new BigDecimal(lines.size()));
         BigDecimal threshold = BigDecimal.valueOf(500);
-        BigDecimal discount50 = BigDecimal.valueOf(50);
+        BigDecimal discountRate = BigDecimal.valueOf(0.10);
 
         int productCount = lines.size();
         BigDecimal discount = BigDecimal.ZERO;
 
-
-        if (productCount%3==0 && productCount != 0){
+        if (productCount % 3 == 0 && productCount != 0) {
             productCount++;
         }
-        if(totalPrice.compareTo(threshold) >= 0){
-            totalPrice = totalPrice.subtract(discount50);
+        if (totalPrice.compareTo(threshold) >= 0) {
+            discount = totalPrice.multiply(discountRate);
         }
 
         BigDecimal finalPrice = totalPrice.subtract(discount);
 
         return new Offer(finalPrice, productCount);
-
     }
 }
