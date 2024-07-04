@@ -1,15 +1,13 @@
 package mshcherba.ecommerce.sales.cart;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Cart {
-    Map<String, Integer> productsQty;
+
+    Map<String, Integer> products;
 
     public Cart() {
-        this.productsQty = new HashMap<>();
+        this.products = new HashMap<>();
     }
 
     public static Cart empty() {
@@ -17,37 +15,35 @@ public class Cart {
     }
 
     public void addProduct(String productId) {
-        if (!isInCart(productId)){
-            addCart(productId);
+        if (!isInCart(productId)) {
+            putIntoCart(productId);
         } else {
-            increaseQuantity(productId);
+            increaseProductQty(productId);
         }
     }
-
-    private void addCart(String productId) {
-        productsQty.put(productId,1);
-    }
-
-    private void increaseQuantity(String productId) {
-        productsQty.put(productId, productsQty.get(productId)+1);
-    }
-
     private boolean isInCart(String productId) {
-        return productsQty.containsKey(productId);
+        return products.containsKey(productId);
+    }
+    private void putIntoCart(String productId) {
+        products.put(productId, 1);
+    }
+    private void increaseProductQty(String productId) {
+        products.put(productId, products.get(productId) + 1);
     }
 
     public boolean isEmpty() {
-        return productsQty.isEmpty();
+        return products.isEmpty();
     }
 
-    public int getLinesCount() {
-        return productsQty.size();
+    public Integer getItemsCount() {
+        return products.size();
     }
 
-    public List<CartLine> getLines() {
-        return productsQty.entrySet()
-                .stream()
+    public List<CartLine> getItems() {
+        return products.entrySet().stream()
                 .map(es -> new CartLine(es.getKey(), es.getValue()))
                 .toList();
     }
+
+
 }

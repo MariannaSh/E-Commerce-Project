@@ -36,7 +36,7 @@ public class CartTest {
 
         cart.addProduct(productX);
 
-        assertThat(cart.getLinesCount())
+        assertThat(cart.getItemsCount())
                 .isEqualTo(1);
     }
 
@@ -49,7 +49,7 @@ public class CartTest {
         cart.addProduct(productX);
 
 
-        assertThat(cart.getLinesCount())
+        assertThat(cart.getItemsCount())
                 .isEqualTo(1);
     }
 
@@ -64,7 +64,7 @@ public class CartTest {
         cart.addProduct(productY);
 
 
-        assertThat(cart.getLinesCount())
+        assertThat(cart.getItemsCount())
                 .isEqualTo(2);
     }
 
@@ -75,7 +75,7 @@ public class CartTest {
 
         cart.addProduct(productX);
 
-        List<CartLine> lines = cart.getLines();
+        List<CartLine> lines = cart.getItems();
 
         assertCartContainsXAmountOfProduct(lines, productX, 1);
     }
@@ -88,7 +88,7 @@ public class CartTest {
         cart.addProduct(productX);
         cart.addProduct(productX);
 
-        List<CartLine> lines = cart.getLines();
+        List<CartLine> lines = cart.getItems();
 
         assertCartContainsXAmountOfProduct(lines, productX, 2);
     }
@@ -105,7 +105,7 @@ public class CartTest {
         cart.addProduct(productY);
 
 
-        List<CartLine> lines = cart.getLines();
+        List<CartLine> lines = cart.getItems();
 
         assertCartContainsXAmountOfProduct(lines, productX, 3);
         assertCartContainsXAmountOfProduct(lines, productY, 1);

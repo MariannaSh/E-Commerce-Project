@@ -1,90 +1,83 @@
 package mshcherba.ecommerce.sales;
 
 
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import mshcherba.ecommerce.catalog.ProductCatalog;
+import mshcherba.ecommerce.sales.cart.CartLine;
 import mshcherba.ecommerce.sales.cart.InMemoryCartStorage;
 import mshcherba.ecommerce.sales.offer.Offer;
 import mshcherba.ecommerce.sales.offer.OfferCalculator;
+import mshcherba.ecommerce.sales.reservation.ReservationRepository;
+import mshcherba.ecommerce.sales.reservation.SpyPaymentGateway;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class SalesTest {
 
     @Test
-    void itShowOffer(){
-        SalesFacade sales = thereIsSalesFacade();
-        String customerId= thereIsExampleCustomer("Mari");
+    void itShowsCurrentOffer() {
+        //ARRANGE
+        SalesFacade sales = thereIsSales();
+        String customerId = thereIsCustomer("Mari");
+
+        //ACT
+        Offer offer = sales.getCurrentOffer(customerId);
+
+        //ASSERT
+        assertThat(offer.getTotal()).isEqualTo(BigDecimal.valueOf(0));
+        assertThat(offer.getItemsCount()).isEqualTo(0);
+    }
+
+    private SalesFacade thereIsSales() {
+        return new SalesFacade(
+                new InMemoryCartStorage(),
+                new OfferCalculator(),
+                new SpyPaymentGateway(),
+                new ReservationRepository());
+    }
+
+
+    private String thereIsCustomer(String name) {
+
+        return name;
+    }
+
+    @Test
+    void itAddsProductToCart() {
+        SalesFacade sales = thereIsSales();
+        String customerId = thereIsCustomer("Zuza");
+        String productId = thereIsProduct("x",BigDecimal.valueOf(300));
+
+        sales.addToCart(customerId,productId);
 
         Offer offer = sales.getCurrentOffer(customerId);
 
-        assertEquals(0, offer.getItemsCount());
-        assertEquals(BigDecimal.ZERO, offer.getTotal());
+        assertThat(offer.getTotal()).isEqualTo(BigDecimal.valueOf(300));
+        assertThat(offer.getItemsCount()).isEqualTo(1);
+
+
     }
 
-    private SalesFacade thereIsSalesFacade() {
-        return new SalesFacade(new InMemoryCartStorage(), new OfferCalculator());
-    }
+    private String thereIsProduct(String id, BigDecimal price) {
 
-    private String thereIsExampleCustomer(String id) {
         return id;
     }
 
     @Test
-    void itAllowsAddProductToCart(){
-        String productId = thereIsProduct("Example", BigDecimal.valueOf(10));
-        String customerId = thereIsExampleCustomer("Mari");
-        SalesFacade sales = thereIsSalesFacade();
+    void itAllowsToRemoveProductFromCart() {
 
-        sales.addToCart(customerId, productId);
-        Offer offer = sales.getCurrentOffer(customerId);
-
-        assertEquals(1,offer.getItemsCount());
-        assertEquals(BigDecimal.valueOf(10), offer.getTotal());
-    }
-
-
-    @Test
-    void itDistinguishCartsByCustomer(){
-        String productA = thereIsProduct("Example a", BigDecimal.valueOf(10));
-        String productB = thereIsProduct("Example b", BigDecimal.valueOf(10));
-        String customerA = thereIsExampleCustomer("Mari");
-        String customerB = thereIsExampleCustomer("Masha");
-        SalesFacade sales = thereIsSalesFacade();
-
-        sales.addToCart(customerA, productA);
-        sales.addToCart(customerB, productB);
-        Offer offerA = sales.getCurrentOffer(customerA);
-        Offer offerB = sales.getCurrentOffer(customerB);
-
-        assertEquals(1,offerA.getItemsCount());
-        assertEquals(BigDecimal.valueOf(10), offerA.getTotal());
-
-        assertEquals(1,offerB.getItemsCount());
-        assertEquals(BigDecimal.valueOf(20), offerB.getTotal());
     }
 
     @Test
-    void itAllowsToAddMultipleProductsToCart(){
-        String productA = thereIsProduct("Example a", BigDecimal.valueOf(10));
-        String productB = thereIsProduct("Example b", BigDecimal.valueOf(20));
-        String customerId = thereIsExampleCustomer("Mari");
-        SalesFacade sales = thereIsSalesFacade();
+    void itAllowsToAcceptOffer() {
 
-        sales.addToCart(customerId, productA);
-        sales.addToCart(customerId, productB);
-        Offer offer = sales.getCurrentOffer(customerId);
-
-        assertEquals(2, offer.getItemsCount());
-        assertEquals(BigDecimal.valueOf(10), offer.getTotal());
     }
-
-    private String thereIsProduct(String name, BigDecimal price) {
-        return name;
-    }
-
-
 
 
 }

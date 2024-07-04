@@ -4,20 +4,20 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public class Product {
+    private  String id;
+    private  String name;
+    private  String description;
 
-    private String id;
-    private String name;
-    private String description;
     private BigDecimal price;
 
     Product() {
-
     }
 
-    public Product(UUID id, String name, String description) {
+    public Product(UUID id, String name, String description, BigDecimal price) {
         this.id = id.toString();
         this.name = name;
         this.description = description;
+        this.price = price;
     }
 
     public String getId() {
@@ -25,11 +25,7 @@ public class Product {
     }
 
     public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void changePrice(BigDecimal newPrice) {
-        this.price = newPrice;
+        return this.price;
     }
 
     public String getName() {
@@ -38,5 +34,9 @@ public class Product {
 
     public String getDescription() {
         return description;
+    }
+
+    public void changePrice(BigDecimal newPrice) {
+        this.price = newPrice;
     }
 }

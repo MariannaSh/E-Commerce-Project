@@ -1,41 +1,39 @@
 package mshcherba.ecommerce.sales;
 
 
+import mshcherba.ecommerce.sales.offer.AcceptOfferRequest;
 import mshcherba.ecommerce.sales.offer.Offer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import mshcherba.ecommerce.sales.reservation.ReservationDetails;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class SalesController {
+
     SalesFacade sales;
 
-    public SalesController(SalesFacade sales){
+    public SalesController(SalesFacade sales) {
         this.sales = sales;
+    }
+
+    @PostMapping("/api/add-product/{productId}")
+    void addProduct (@PathVariable(name = "productId") String productId){
+        String customerId = getCurrentCustomer();
+        sales.addToCart(customerId, productId);
+    }
+
+    @PostMapping("/api/accept-offer")
+    ReservationDetails acceptOffer(@RequestBody AcceptOfferRequest request) {
+        String customerId = getCurrentCustomer();
+        return sales.acceptOffer(customerId, request);
     }
 
     @GetMapping("/api/current-offer")
     Offer getCurrentOffer() {
-        String customerId = getCurrentCustomerId();
+        String customerId = getCurrentCustomer();
         return sales.getCurrentOffer(customerId);
     }
 
-    @PostMapping("/api/accept-offer")
-    ReservationDetails acceptOffer() {
-        String customerId = getCurrentCustomerId();
-        ReservationDetails details = sales.acceptOffer(customerId);
-        return details;
+    private String getCurrentCustomer() {
+        return "guest";
     }
-
-    @PostMapping("/api/add-to-cart/{productId}")
-    void addToCart(@PathVariable String productId) {
-        String customerId = getCurrentCustomerId();
-        sales.addToCart(customerId, productId);
-    }
-
-    private String getCurrentCustomerId() {
-        return "Mari";
-    }
-
 }

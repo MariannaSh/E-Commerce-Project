@@ -1,8 +1,10 @@
 package mshcherba.ecommerce.sales.cart;
 
+
 public class CartLine {
     private final String productId;
     private final Integer qty;
+
 
     public CartLine(String productId, Integer qty) {
         this.productId = productId;

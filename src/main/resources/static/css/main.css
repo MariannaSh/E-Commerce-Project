@@ -1,3 +1,125 @@
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Основные стили */
 body {
-    background: bisque;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4; /* Цвет фона страницы */
+    color: #333; /* Основной цвет текста */
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333; /* Цвет фона шапки */
+    color: #fff; /* Цвет текста в шапке */
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1.welcome {
+    text-align: center;
+    margin: 20px 0;
+    color: #333; /* Основной цвет заголовков */
+}
+
+#offer {
+    background-color: #fff; /* Цвет фона блока с предложением */
+    color: #333; /* Цвет текста в блоке с предложением */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+form label {
+    margin: 5px;
+}
+
+form input {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Цвет кнопки */
+    color: #fff; /* Цвет текста на кнопке */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+form button:hover {
+    background-color: #0056b3; /* Цвет кнопки при наведении */
+}
+
+.productsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    list-style-type: none;
+    padding: 20px;
+}
+
+.productsList li {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.productsList li h4 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.productsList li img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.productsList li span {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.productsList li button {
+    padding: 10px 20px;
+    background-color: #28a745; /* Цвет кнопки */
+    color: #fff; /* Цвет текста на кнопке */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.productsList li button:hover {
+    background-color: #218838; /* Цвет кнопки при наведении */
 }

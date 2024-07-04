@@ -8,4 +8,5 @@ public interface ProductStorage {
     void add(Product newProduct);
 
     Product getProductBy(String id);
+
 }

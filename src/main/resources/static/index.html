@@ -2,27 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Ecommerce</title>
     <link rel="stylesheet" href="/css/main.css"/>
 </head>
 <body>
-    <h1>Welcome, here it is</h1>
     <header>
-        <div class = "offer">
-            Total: <span class = "offer__total">0.0</span>
-            Items Count: <span class = "offer__itemsCount">0</span>
-            <form>
-                <input name = "firstname" placeholder="John"/>
-                <input name = "lastname" placeholder="Doe"/>
-                <input name = "email" placeholder="john.doe@gmail.com"/>
-                <button type = "submit">Checkout</button>
+        <div id="offer">
+            <p>Total: <span id="offerTotal">...</span></p>
+            <p>Items count: <span id="offerItemsCount">...</span></p>
+            <form id="checkout">
+                <label>
+                    <input name="firstname" placeholder="Name" required>
+                </label>
+                <br>
+                <label>
+                    <input name="lastname" placeholder="Lastname" required>
+                </label>
+                <br>
+                <label>
+                    <input name="email" type="email" placeholder="Email" required>
+                </label>
+                <br>
+                <button type="submit" id="buy">Accept</button>
             </form>
         </div>
     </header>
-    <ul id="productsList"></ul>
-
-    <p>src/main/resources/static/index.html</p>
+    <h1 class="welcome">Welcome to My Ecommerce</h1>
+    <ul class="productsList" id="productsList"></ul>
     <script type="text/javascript" src="/js/main.js"></script>
-
 </body>
 </html>

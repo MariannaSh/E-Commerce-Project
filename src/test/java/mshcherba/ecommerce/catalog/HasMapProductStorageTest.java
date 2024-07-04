@@ -2,13 +2,16 @@ package mshcherba.ecommerce.catalog;
 
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import static org.assertj.core.api.Assertions.*;
 
 public class HasMapProductStorageTest {
+    private static final String TEST_PRODUCT_NAME = "test product";
+
     @Test
-    void itStoreNewProduct(){
+    void itStoreNewProduct() {
         ProductStorage storage = thereIsProductStorage();
         Product product = thereIsExampleProduct();
         storage.add(product);
@@ -19,11 +22,17 @@ public class HasMapProductStorageTest {
                 .contains("test product");
     }
 
-    private Product thereIsExampleProduct(){
-        return new Product(UUID.randomUUID(), "test product", "nazwa");
+    private ProductStorage thereIsProductStorage() {
+        return new HashMapProductStorage();
     }
 
-    private ProductStorage thereIsProductStorage(){
-        return new HasMapProductStorage();
+
+    private Product thereIsExampleProduct() {
+        return new Product(UUID.randomUUID(), TEST_PRODUCT_NAME, "", BigDecimal.valueOf(100));
+    }
+
+    @Test
+    void itLoadsAllProducts() {
+
     }
 }
