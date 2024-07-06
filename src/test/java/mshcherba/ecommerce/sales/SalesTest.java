@@ -17,9 +17,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 
-
+@SpringBootTest
 public class SalesTest {
 
+    @Autowired
+    ProductCatalog catalog;
     @Test
     void itShowsCurrentOffer() {
         //ARRANGE
@@ -37,7 +39,7 @@ public class SalesTest {
     private SalesFacade thereIsSales() {
         return new SalesFacade(
                 new InMemoryCartStorage(),
-                new OfferCalculator(),
+                new OfferCalculator(catalog),
                 new SpyPaymentGateway(),
                 new ReservationRepository());
     }
@@ -52,7 +54,7 @@ public class SalesTest {
     void itAddsProductToCart() {
         SalesFacade sales = thereIsSales();
         String customerId = thereIsCustomer("Mari");
-        String productId = thereIsProduct("x",BigDecimal.valueOf(300));
+        String productId = thereIsProduct("x","new",BigDecimal.valueOf(300), "https://example.com");
 
         sales.addToCart(customerId,productId);
 
@@ -64,9 +66,8 @@ public class SalesTest {
 
     }
 
-    private String thereIsProduct(String id, BigDecimal price) {
-
-        return id;
+    private String thereIsProduct(String name, String desc, BigDecimal price, String url) {
+        return catalog.addProduct(name, desc, price, url);
     }
 
     @Test

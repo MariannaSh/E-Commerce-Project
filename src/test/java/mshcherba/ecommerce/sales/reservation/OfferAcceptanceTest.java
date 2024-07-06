@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import mshcherba.ecommerce.catalog.ProductCatalog;
-import mshcherba.ecommerce.sales.cart.CartLine;
 import mshcherba.ecommerce.sales.cart.InMemoryCartStorage;
 import mshcherba.ecommerce.sales.offer.AcceptOfferRequest;
 import mshcherba.ecommerce.sales.SalesFacade;
@@ -13,12 +12,18 @@ import mshcherba.ecommerce.sales.offer.OfferCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 public class OfferAcceptanceTest {
     private SpyPaymentGateway spyPaymentGateway;
     private ReservationRepository reservationRepository;
+
+    @Autowired
+    ProductCatalog catalog;
+
 
     @BeforeEach
     void setUp(){
@@ -30,7 +35,7 @@ public class OfferAcceptanceTest {
     void itAllowsToAcceptAnOffer() {
         SalesFacade sales = thereIsSales();
         String customerId = thereIsCustomer("Mari");
-        String productId = thereIsProduct("X", BigDecimal.valueOf(300));
+        String productId = thereIsProduct("X", "new",BigDecimal.valueOf(300),"https://example.com");
 
         sales.addToCart(customerId, productId);
         sales.addToCart(customerId, productId);
@@ -50,7 +55,7 @@ public class OfferAcceptanceTest {
         asserThereIsReservationWithId(reservationDetails.getReservationId());
         asserReservationIsPending(reservationDetails.getReservationId());
         asserReservationIsDoneForCustomer(reservationDetails.getReservationId(), "Mari", "Shcherba", "mari@gmail.com");
-        asserReservationTotalMatchOffer(reservationDetails.getReservationId(), BigDecimal.valueOf(300));
+        asserReservationTotalMatchOffer(reservationDetails.getReservationId(), BigDecimal.valueOf(600));
 
     }
 
@@ -90,8 +95,8 @@ public class OfferAcceptanceTest {
         assertThat(spyPaymentGateway.getRequestsCount()).isEqualTo(1);
     }
 
-    private String thereIsProduct(String productId, BigDecimal bigDecimal) {
-        return productId;
+    private String thereIsProduct(String name, String desc, BigDecimal price,String url) {
+        return catalog.addProduct(name, desc, price, url);
     }
 
     private String thereIsCustomer(String id) {
@@ -101,7 +106,7 @@ public class OfferAcceptanceTest {
     private SalesFacade thereIsSales() {
         return new SalesFacade(
                new InMemoryCartStorage(),
-                new OfferCalculator(),
+                new OfferCalculator(catalog),
                 spyPaymentGateway,
                 reservationRepository
         );

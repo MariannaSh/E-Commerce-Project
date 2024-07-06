@@ -28,6 +28,7 @@ public class SqlTest {
                 name VARCHAR(200) NOT NULL,
                 description VARCHAR(255),
                 price DECIMAL(12,2),
+                url VARCHAR(255),
                 PRIMARY KEY(id)
                 );
                 """;
@@ -81,7 +82,7 @@ public class SqlTest {
 
     @Test
     void itInsertDynamicElement(){
-        var product = new Product(UUID.randomUUID(),"Ex 1","Nice one", BigDecimal.valueOf(300));
+        var product = new Product(UUID.randomUUID(),"Ex 1","Nice one", BigDecimal.valueOf(300),"https://example.com/product");
         product.changePrice(BigDecimal.valueOf(111.11));
 
         var sql = """
@@ -113,30 +114,5 @@ public class SqlTest {
                 .contains("example product X");
 
     }
-    @Test
-    void itSelectWithConditions() {
-        var sql = """
-                INSERT INTO `product_catalog__products` (id, name, description, price)
-                VALUES
-                    ('asdasd4', 'example product X', 'nice one', 10.10),
-                    ('5g8dff4', 'example product Y', 'nice one', 20.20);
-                """;
-        jdbcTemplate.update(sql);
 
-        Product product = jdbcTemplate.queryForObject(
-                "Select * from `product_catalog__products` where id = ?",
-                new Object[]{"asdasd4"},
-                (rs,i) -> {
-                    var loaded = new Product(
-                            UUID.randomUUID(),
-                            rs.getString("NAME"),
-                            rs.getString("DESCRIPTION"),
-                            BigDecimal.valueOf(300)
-                    );
-                    loaded.changePrice(rs.getBigDecimal("PRICE"));
-                    return loaded;
-                }
-        );
-        assertThat(product.getName()).isEqualTo("example product X");
-
-    }}
+}

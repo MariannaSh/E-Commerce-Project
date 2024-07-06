@@ -28,7 +28,7 @@ public class HasMapProductStorageTest {
 
 
     private Product thereIsExampleProduct() {
-        return new Product(UUID.randomUUID(), TEST_PRODUCT_NAME, "", BigDecimal.valueOf(100));
+        return new Product(UUID.randomUUID(), TEST_PRODUCT_NAME, "", BigDecimal.valueOf(100),"https://example.com/product" );
     }
 
     @Test
